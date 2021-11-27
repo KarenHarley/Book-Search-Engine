@@ -39,7 +39,7 @@ const SavedBooks = () => {
     getUserData();
   }, [userDataLength]);
 */
-const { userData, data } = useQuery(GET_ME);
+const { getUserData, dataQuery } = useQuery(GET_ME);
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -49,14 +49,14 @@ const { userData, data } = useQuery(GET_ME);
     }
 
     try {
-       /*const response = await deleteBook(bookId, token);
+       const response = await deleteBook(bookId, token);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
 
       const updatedUser = await response.json();
-      */
+      
       const { data } = await deleteBook({
         variables: { bookId,token },
       });
