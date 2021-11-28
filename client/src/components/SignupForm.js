@@ -53,7 +53,7 @@ const SignupForm = () => {
         variables: { ...userFormData },
       });
       console.log(data);
-      Auth.login(data.addProfile.token);
+      Auth.login(data.addUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);

@@ -20,7 +20,7 @@ const resolvers = {
       const user = await User.create(body);
       const token = signToken(user);
 
-      return { token, profile };
+      return { token, user };
     },
 
     login: async (parent, { body }) => {
@@ -39,7 +39,7 @@ const resolvers = {
       }
 
       const token = signToken(user);
-      return { token, profile };
+      return { token, user };
     },
 
     saveBook: async (parent, { user, body }) => {
