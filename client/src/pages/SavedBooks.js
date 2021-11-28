@@ -13,10 +13,13 @@ const SavedBooks = () => {
   const userDataLength = Object.keys(userData).length;
 
   const [deleteBook, { error, data }] = useMutation(REMOVE_BOOK);
-  /*
+  
   useEffect(() => {
+    
     const getUserData = async () => {
       try {
+
+        /*
         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
         if (!token) {
@@ -31,15 +34,40 @@ const SavedBooks = () => {
 
         const user = await response.json();
         setUserData(user);
+
+        */
+        const { getUserData, dataQuery } = useQuery(GET_ME);
+
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+          return false;
+        }
+
+        const { data } = await getUserData({
+          variables: { token },
+        });
+        Auth.login(data.getUserData.token);
+        
+        setUserData(data)
+
       } catch (err) {
         console.error(err);
       }
+      
     };
 
     getUserData();
+
+    
+
+
+
+
+
   }, [userDataLength]);
-*/
-const { getUserData, dataQuery } = useQuery(GET_ME);
+
+//const { getUserData, dataQuery } = useQuery(GET_ME);
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -49,20 +77,20 @@ const { getUserData, dataQuery } = useQuery(GET_ME);
     }
 
     try {
-       const response = await deleteBook(bookId, token);
+       //const response = await deleteBook(bookId, token);
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+     // if (!response.ok) {
+     //   throw new Error('something went wrong!');
+    //  }
 
-      const updatedUser = await response.json();
+    //  const updatedUser = await response.json();
       
       const { data } = await deleteBook({
         variables: { bookId,token },
       });
-      Auth.login(data.addProfile.token);
+      Auth.login(data.deleteBook.token);
 
-      setUserData(updatedUser);
+      setUserData(data);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {
