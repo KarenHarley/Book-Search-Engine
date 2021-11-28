@@ -19,8 +19,8 @@ const SavedBooks = () => {
   const userDataLength = Object.keys(userData).length;
 
   const [deleteBook, { error, data }] = useMutation(REMOVE_BOOK);
+  const { getMeData, dataQuery } = useQuery(GET_ME);
 
-  useEffect(() => {
     const getUserData = async () => {
       try {
         /*
@@ -40,7 +40,7 @@ const SavedBooks = () => {
         setUserData(user);
 
         */
-        const { getUserData, dataQuery } = useQuery(GET_ME);
+
 
         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -48,19 +48,19 @@ const SavedBooks = () => {
           return false;
         }
 
-        const { dataQuery } = await getUserData({
+        const { data } = await getMeData({
           variables: { token },
         });
-        Auth.login(dataQuery.getUserData.token);
+        Auth.login(data.getMeData.token);
 
-        setUserData(dataQuery);
+        setUserData(data);
       } catch (err) {
         console.error(err);
       }
     };
 
-    getUserData();
-  }, [userDataLength]);
+  //  getUserData();
+
 
   //const { getUserData, dataQuery } = useQuery(GET_ME);
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
@@ -97,7 +97,7 @@ const SavedBooks = () => {
   if (!userDataLength) {
     return <h2>LOADING...</h2>;
   }
-
+  {getUserData()}
   return (
     <>
       <Jumbotron fluid className="text-light bg-dark">
