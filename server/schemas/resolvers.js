@@ -43,10 +43,10 @@ const resolvers = {
       return { token, user };
     },
 
-    saveBook: async (parent, { user, body }) => {
+    saveBook: async (parent, {bookData},{user}) => {
       return await User.findOneAndUpdate(
         { _id: user._id },
-        { $addToSet: { savedBooks: body } },
+        { $addToSet: { savedBooks: bookData } },
         { new: true, runValidators: true }
       );
     },
