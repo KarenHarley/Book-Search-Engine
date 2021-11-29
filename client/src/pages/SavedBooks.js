@@ -16,53 +16,18 @@ const SavedBooks = () => {
   const [userData, setUserData] = useState({});
 
   // use this to determine if `useEffect()` hook needs to run again
-  const userDataLength = Object.keys(userData).length;
+  //const userDataLength = Object.keys(userData).length;
 
   const [deleteBook, { error, data }] = useMutation(REMOVE_BOOK);
-  const { getMeData, dataQuery } = useQuery(GET_ME);
+  const { loading, data: meData } = useQuery(GET_ME);
 
-    const getUserData = async () => {
-      try {
-        /*
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-        if (!token) {
-          return false;
-        }
-
-        const response = await getMe(token);
-
-        if (!response.ok) {
-          throw new Error('something went wrong!');
-        }
-
-        const user = await response.json();
-        setUserData(user);
-
-        */
+  if (userData == null){
+  setUserData({data: meData})
+  }
+  console.log(userData)
+  console.log(meData)
 
 
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-        if (!token) {
-          return false;
-        }
-
-        const { data } = await getMeData({
-          variables: { token },
-        });
-        Auth.login(data.getMeData.token);
-
-        setUserData(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-  //  getUserData();
-
-
-  //const { getUserData, dataQuery } = useQuery(GET_ME);
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -94,10 +59,9 @@ const SavedBooks = () => {
   };
 
   // if data isn't here yet, say so
-  if (!userDataLength) {
+  if (loading) {
     return <h2>LOADING...</h2>;
   }
-  {getUserData()}
   return (
     <>
       <Jumbotron fluid className="text-light bg-dark">
