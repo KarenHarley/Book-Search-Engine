@@ -50,10 +50,10 @@ const resolvers = {
         { new: true, runValidators: true }
       );
     },
-    removeBook: async (parent, args) => { // maybe this async (parent, args,context) => { then see me above)
+    removeBook: async (parent,{bookId},context) => { // maybe this async (parent, args,context) => { then see me above)
       return User.findOneAndUpdate(
-        { _id: args._id },
-        { $pull: { savedBooks: { bookId: args.bookId } } },
+        { _id: context.user._id },
+        { $pull: { savedBooks: { bookId: bookId } } },
         { new: true }
       );
     },
