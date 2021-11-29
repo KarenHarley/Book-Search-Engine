@@ -6,18 +6,20 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id }).select('-__v -password');
+        const userData = await User.findOne({ _id: context.user._id }).select(
+          "-__v -password"
+        );
 
         return userData;
       }
 
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
   },
 
   Mutation: {
     addUser: async (parent, args) => {
-      console.log(args)
+      console.log(args);
       const user = await User.create(args);
       const token = signToken(user);
 
@@ -43,19 +45,23 @@ const resolvers = {
       return { token, user };
     },
 
-    saveBook: async (parent, {bookData},{user}) => {
+    saveBook: async (parent, { bookData }, { user }) => {
       return await User.findOneAndUpdate(
         { _id: user._id },
         { $addToSet: { savedBooks: bookData } },
         { new: true, runValidators: true }
       );
     },
-    removeBook: async (parent,{bookId},context) => { // maybe this async (parent, args,context) => { then see me above)
-      return User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $pull: { savedBooks: { bookId: bookId } } },
-        { new: true }
-      );
+    removeBook: async (parent, { bookId }, context) => {
+      if (context.user) {
+        const updateUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedBooks: { bookId: bookId } } },
+          { new: true }
+        );
+        return updateUser;
+      }
+      throw new AuthenticationError("User not loged");
     },
   },
 };
