@@ -34,10 +34,8 @@ const SavedBooks = () => {
     try {
 
       const { data } = await deleteBook({
-        variables: { bookId, token },
+        variables: { bookId},
       });
-      Auth.login(data.deleteBook.token);
-      //  setUserData(data);
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {
