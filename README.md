@@ -37,21 +37,33 @@ After entering into the website, you can do the following.
 
 ![home](./pics/website.png)
 
+<br/>
 
-
-### Below you will see the Dashboard 
+![results](./pics/results.png)
 
 <br/>
 
-![dashboard](./pics/dashboard.png)
+### Below you will see the Login and Signup 
 
 <br/>
 
-### Below you will see the view when creating a new workout
+![login](./pics/login.png)
 
 <br/>
 
-![add workout](./pics/addWorkout.png)
+<br/>
+
+<br/>
+
+![signup](./pics/signUp.png)
+
+<br/>
+
+### Below you will see the view that renders the saved books
+
+<br/>
+
+![saved Books](./pics/savedBook.png)
 
 
 
