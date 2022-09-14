@@ -4,7 +4,7 @@
 
 ## Description
 
-This application allows users to easily seach for Books and if logged in they can add and save books that are interesting or that they like! These saved Books are displayed and rendered in a seperate page where the user can view and or delete them. 
+This application allows users to easily seach for a wide variety of books and if logged in they can add and save books that are interesting or that they like! These saved Books are displayed and rendered in a seperate page where the user can view and or delete them. 
 
 ## Table of Contents
 
@@ -17,6 +17,7 @@ This application allows users to easily seach for Books and if logged in they ca
 <br/>
   
   ## Usage
+  
 After entering into the website, you can do the following.
 
 1. Seach for books.
